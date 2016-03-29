@@ -18,6 +18,7 @@ var updateCart = function () {
     $('.cart-list').append(newHtml);
   }
    $('.total').html(total);
+   removeItem();
 }
 
 
@@ -31,6 +32,14 @@ var clearCart = function () {
   $('.cart-list').empty();
   $('.total').html(0);
   cart =[];
+}
+
+var removeItem = function(){
+
+$('.removeBtn').on('click', function () {
+  $(this).closest('.cart-item').remove();
+  
+});
 }
 
 $('.view-cart').on('click', function () {
