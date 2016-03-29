@@ -18,7 +18,7 @@ var updateCart = function () {
     $('.cart-list').append(newHtml);
   }
    $('.total').html(total);
-   removeItem();
+   removeCart();
 }
 
 
@@ -33,12 +33,22 @@ var clearCart = function () {
   $('.total').html(0);
   cart =[];
 }
+var removeObject = function(currentItem){
+var $current = $(currentItem).closest('.cart-item');
+    var index = $current.index();
+    cart.splice(index, 1);
 
-var removeItem = function(){
+    $current.closest('.cart-item').remove();
+
+updateCart();
+
+}
+
+var removeCart = function(){
 
 $('.removeBtn').on('click', function () {
-  $(this).closest('.cart-item').remove();
   
+  removeObject(this);
 });
 }
 
