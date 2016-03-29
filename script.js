@@ -1,5 +1,7 @@
 // an array with all of our cart items
-var cart = [];
+var cart = {
+  items:[]
+};
 
 
 
@@ -9,7 +11,15 @@ var updateCart = function () {
 
 
 var addItem = function (item) {
-  // TODO: finish
+  cart.items.push(item);
+  console.log(cart);
+
+  var source = $('#new-item-template').html();
+  var template = Handlebars.compile(source);
+  var newHtml = template(cart.items[0]);
+
+  $('.cart-list').append(newHtml);
+
 
 }
 
