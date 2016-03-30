@@ -3,6 +3,7 @@ var STOR = 'shopping';
 var cart = [];
 var total = 0;
 
+cart = getFromLocalStorage();
 
 var saveToLocalStorage = function (item) {
   localStorage.setItem(STOR, JSON.stringify(cart));
@@ -10,15 +11,14 @@ var saveToLocalStorage = function (item) {
 
 var getFromLocalStorage = function () {
   return JSON.parse(localStorage.getItem(STOR) || '[]');
-
 }
 
-  cart = getFromLocalStorage();
 
 var updateCart = function () {
-  // TODO: finish
   $('.cart-list').empty();
+
   total = 0;
+
   for (var i =0;i < cart.length; i++) {
     var source = $('#new-item-template').html();
     var template = Handlebars.compile(source);
@@ -29,7 +29,8 @@ var updateCart = function () {
 
     $('.cart-list').append(newHtml);
   }
-   $('.total').html(total);
+
+  $('.total').html(total);
 }
 
 
@@ -43,16 +44,15 @@ var addItem = function (item) {
 var clearCart = function () {
   $('.cart-list').empty();
   $('.total').html(0);
+
   cart =[];
 }
 
 $('.view-cart').on('click', function () {
-  // TODO: hide/show the shopping cart!
   $('.shopping-cart').toggle('show');
 });
 
 $('.add-to-cart').on('click', function () {
-  // TODO: get the "item" object from the page
   var item = {
     product: $(this).closest('.card').data().name,
     price: $(this).closest('.card').data().price
@@ -60,7 +60,6 @@ $('.add-to-cart').on('click', function () {
 
   addItem(item);
   updateCart();
-
 });
 
 $('.clear-cart').on('click', function () {
