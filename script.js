@@ -3,7 +3,7 @@ var STOR = 'shopping';
 var cart = [];
 var total = 0;
 
-cart = getFromLocalStorage();
+
 
 var saveToLocalStorage = function (item) {
   localStorage.setItem(STOR, JSON.stringify(cart));
@@ -13,6 +13,7 @@ var getFromLocalStorage = function () {
   return JSON.parse(localStorage.getItem(STOR) || '[]');
 }
 
+cart = getFromLocalStorage();
 
 var updateCart = function () {
   $('.cart-list').empty();
