@@ -3,6 +3,18 @@ var STOR = 'shopping';
 var cart = [];
 var total = 0;
 
+
+var remove = function(){
+  $('.remove').on('click', function () {
+  var index = $(this).closest('.cart-item').index()
+  cart.splice(index,1);
+  $(this).closest('.cart-item').remove();
+
+   saveToLocalStorage();
+});
+
+}
+
 var removeLocalStorage = function(){
   localStorage.removeItem(STOR);
   location.reload();
@@ -35,6 +47,7 @@ var updateCart = function () {
   }
 
   $('.total').html(total);
+  remove();
 }
 
 
@@ -73,40 +86,12 @@ function itemExists(item){
   return false;
 }
 
-
-
-// var addItem = function (item) {
-//   if (cart.length === 0){
-//     //console.log(item.qty + " 52 " + item.product);
-//     cart.push(item);
-//   } else {
-//       for (var i = 0; i < cart.length; i++){
-//         if (item.product === cart[i].product) {
-//             //console.log(item.product +" "+ cart[i].product);
-//             //console.log(cart[i].qty + " before");
-//             cart[i].qty++;
-//             //console.log(cart[i].qty + " after");
-//             //console.log(item.qty + " 59 "+ item.product);
-//             break;   
-//         } else {
-//             //console.log(item.qty + " 61 "+ item.product);
-//             cart.push(item); 
-//         }
-//       }
-//   updateCart();
-//   }
-  // saveToLocalStorage(item);
-//   updateCart();
-// }
-
-
 var clearCart = function () {
   $('.cart-list').empty();
   $('.total').html(0);
 
   cart =[];
 }
-
 
 
 $('.view-cart').on('click', function () {
