@@ -3,7 +3,11 @@ var STOR = 'shopping';
 var cart = [];
 var total = 0;
 
+var removeLocalStorage = function(){
+  localStorage.removeItem(STOR);
+  location.reload();
 
+}
 
 var saveToLocalStorage = function (item) {
   localStorage.setItem(STOR, JSON.stringify(cart));
@@ -27,7 +31,6 @@ var updateCart = function () {
     
     var itemPrice = cart[i].price;
     total  += itemPrice;
-
     $('.cart-list').append(newHtml);
   }
 
@@ -36,11 +39,66 @@ var updateCart = function () {
 
 
 var addItem = function (item) {
-  cart.push(item);
-  saveToLocalStorage(cart[0]);
+  
+  if(itemExists(item)){
+    updateItemQty(item);
+  }
+  else{
+    cart.push(item);    
+  }
 
-  updateCart(cart[0].item);
+
+
+ saveToLocalStorage(cart[0]);
+
+  updateCart();
 }
+
+function updateItemQty(item){
+  for(var i = 0; i < cart.length; i++){
+
+    if(cart[i].product == item.product){
+      cart[i].qty++;
+    }  
+  }
+}
+function itemExists(item){
+
+  for(var i = 0; i < cart.length; i++){
+
+    if(cart[i].product == item.product){
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
+// var addItem = function (item) {
+//   if (cart.length === 0){
+//     //console.log(item.qty + " 52 " + item.product);
+//     cart.push(item);
+//   } else {
+//       for (var i = 0; i < cart.length; i++){
+//         if (item.product === cart[i].product) {
+//             //console.log(item.product +" "+ cart[i].product);
+//             //console.log(cart[i].qty + " before");
+//             cart[i].qty++;
+//             //console.log(cart[i].qty + " after");
+//             //console.log(item.qty + " 59 "+ item.product);
+//             break;   
+//         } else {
+//             //console.log(item.qty + " 61 "+ item.product);
+//             cart.push(item); 
+//         }
+//       }
+//   updateCart();
+//   }
+  // saveToLocalStorage(item);
+//   updateCart();
+// }
+
 
 var clearCart = function () {
   $('.cart-list').empty();
@@ -49,6 +107,8 @@ var clearCart = function () {
   cart =[];
 }
 
+
+
 $('.view-cart').on('click', function () {
   $('.shopping-cart').toggle('show');
 });
@@ -56,11 +116,11 @@ $('.view-cart').on('click', function () {
 $('.add-to-cart').on('click', function () {
   var item = {
     product: $(this).closest('.card').data().name,
-    price: $(this).closest('.card').data().price
+    price: $(this).closest('.card').data().price,
+    qty: 1
   }
 
   addItem(item);
-  updateCart();
 });
 
 $('.clear-cart').on('click', function () {
