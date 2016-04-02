@@ -11,6 +11,7 @@ var remove = function(){
   $(this).closest('.cart-item').remove();
 
    saveToLocalStorage();
+   updateCart();
 });
 
 }
@@ -18,6 +19,7 @@ var remove = function(){
 var removeLocalStorage = function(){
   localStorage.removeItem(STOR);
   location.reload();
+
 
 }
 
@@ -41,7 +43,7 @@ var updateCart = function () {
     var template = Handlebars.compile(source);
     var newHtml = template(cart[i]);
     
-    var itemPrice = cart[i].price;
+    var itemPrice = cart[i].price * cart[i].qty;
     total  += itemPrice;
     $('.cart-list').append(newHtml);
   }
